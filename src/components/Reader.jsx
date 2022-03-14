@@ -44,6 +44,18 @@ const Reader = () => {
     setPage(0)
   }
 
+  const renderIMG = (chapter, level, page) => {
+    const imgUrl = new URL(`../../images/comics/Chapter ${chapter}/Level ${level}/Post/${page}.png`, import.meta.url).href
+    return (<img src={imgUrl} alt="page" className="object-contain w-full" />)
+  }
+
+  const renderIMGwithNext = (chapter, level, page) => {
+    const imgUrl = new URL(`../../images/comics/Chapter ${chapter}/Level ${level}/Post/${page}.png`, import.meta.url).href
+    return (<img src={imgUrl} alt="page" className="object-contain w-full" onClick={() => {
+      setPage(page + 1)
+      window.scrollTo(0, 0)}}/>)
+  }
+
   useEffect(() => {
     
   }, [])
@@ -109,20 +121,16 @@ const Reader = () => {
             </FormControl>
           </div>
         </div>
-        {pages.map((viewPage) => (
-          (page == 0) ? (
-            <div className="flex flex-col justify-center items-center">
-              <img src={`../../images/comics/Chapter ${chapter}/Level ${level}/Post/${viewPage.page}.png`} alt="page" className="object-contain w-full" />
-            </div>
-          ) 
-          : (page == viewPage.page) && (
-            <div className="flex flex-col justify-center items-center">
-              <img src={`../../images/comics/Chapter ${chapter}/Level ${level}/Post/${viewPage.page}.png`} alt="page" className="object-contain w-full" onClick={() => {
-                setPage(page + 1)
-                window.scrollTo(0, 0)}}/>
-            </div>
-          )
-        ))}
+        <div className="flex flex-col justify-center items-center">
+          {pages.map((viewPage) => (
+            (page == 0) ? (
+              renderIMG(chapter, level, viewPage.page)
+            ) 
+            : (page == viewPage.page) && (
+              renderIMGwithNext(chapter, level, viewPage.page)
+            )
+          ))}
+        </div>
         {chapter.length != 0 && level.length != 0 && <div className="flex md:flex-row flex-col m-3 w-full justify-between mt-10">
           <div className="flex md:flex-row flex-col m-3 w-[50%]">
             <FormControl fullWidth>

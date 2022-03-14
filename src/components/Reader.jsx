@@ -21,13 +21,6 @@ const Reader = () => {
   const [pages, setPages] = useState([])
   const [maxPage, setMaxPage] = useState(0)
 
-  // const fs = require('fs');
-  // const dir = './directory';
-
-  // fs.readdir(dir, (err, files) => {
-  // console.log(files.length);
-  // });
-
   const setPageArray = (chapters, chapter, levels, level) => {
     setPages([])
     chapters.map((thisChapter) => {
@@ -62,6 +55,21 @@ const Reader = () => {
       window.scrollTo(0, 0)}}/>)
   }
 
+  const changePage = (e) => {
+    switch (e.keyCode) {
+        case 37:
+          console.log(page)
+          if(page == 1) setPage(page) 
+          else if(page != 0) setPage(page - 1) 
+          break;
+        case 39:
+          console.log(page)
+          if(page == maxPage) setPage(page) 
+          else if(page != 0) setPage(page + 1) 
+          break;
+    }
+  }
+
   useEffect(() => {
     
   }, [])
@@ -71,9 +79,9 @@ const Reader = () => {
       <div className="fixed bottom-10 right-10">
         <BsFillArrowUpCircleFill className="text-gray-700 opacity-80 text-[100px] cursor-pointer" onClick={() => window.scrollTo(0,0)}/>
       </div>
-      <div className="flex flex-col w-[70%] justify-start">
+      <div className="flex flex-col md:w-[70%] w-[90%] justify-start">
         <div className="flex md:flex-row flex-col m-3 w-full justify-between">
-          <div className="flex md:flex-row flex-col m-3 w-[50%]">
+          <div className="flex md:flex-row flex-col m-3 md:w-[50%] w-full">
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label" style={{color:"#fff"}}>Chapter</InputLabel>
               <Select
@@ -90,7 +98,7 @@ const Reader = () => {
               {chapters.map((singleChapter) =>  <MenuItem key={singleChapter.id} value={singleChapter.id}>{singleChapter.name}</MenuItem>)}
               </Select>
             </FormControl>
-            <div className="flex w-[20%] mx-2">
+            <div className="flex md:w-[20%] w-full md:mx-2">
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label" style={{color:"#fff"}}>Level</InputLabel>
                 <Select
@@ -110,7 +118,7 @@ const Reader = () => {
             </div>
           </div>
           
-          <div className="flex md:flex-row flex-col m-3 w-[10%]">
+          <div className="flex md:flex-row flex-col m-3 md:w-[10%] w-full">
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label" style={{color:"#fff"}}>Page</InputLabel>
               <Select
@@ -132,10 +140,11 @@ const Reader = () => {
           {pages.map((viewPage) => (
             (page == 0) ? (renderIMG(chapter, level, viewPage.page)) : (page == viewPage.page) && (renderIMGwithNext(chapter, level, viewPage.page, maxPage))
           ))}
+          {document.onkeydown = changePage}
         </div>
 
         {chapter.length != 0 && level.length != 0 && <div className="flex md:flex-row flex-col m-3 w-full justify-between mt-10">
-          <div className="flex md:flex-row flex-col m-3 w-[50%]">
+          <div className="flex md:flex-row flex-col m-3 md:w-[50%] w-full">
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label" style={{color:"#fff"}}>Chapter</InputLabel>
               <Select
@@ -153,7 +162,7 @@ const Reader = () => {
               {chapters.map((singleChapter) =>  <MenuItem key={singleChapter.id} value={singleChapter.id}>{singleChapter.name}</MenuItem>)}
               </Select>
             </FormControl>
-            <div className="flex w-[20%] mx-2">
+            <div className="flex md:w-[20%] w-full md:mx-2">
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label" style={{color:"#fff"}}>Level</InputLabel>
                 <Select
@@ -174,7 +183,7 @@ const Reader = () => {
             </div>
           </div>
           
-          <div className="flex md:flex-row flex-col m-3 w-[10%]">
+          <div className="flex md:flex-row flex-col m-3 md:w-[10%] w-full">
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label" style={{color:"#fff"}}>Page</InputLabel>
               <Select

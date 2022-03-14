@@ -5,7 +5,7 @@ const Footer = () => {
   const [email, setEmail] = useState('')
 
   return (
-    <div className="w-full flex md:justify-center justify-between items-center flex-col p-4 gradient-bg-footer-market">
+    <div className="w-full flex md:justify-center justify-between items-center flex-col p-4 gradient-bg-footer-market mt-80">
     <div className="w-full flex sm:flex-row flex-col justify-between items-center my-4">
       <div className="flex flex-1 justify-center items-center flex-wrap sm:mt-0 mt-5 w-full">
       <a target="_blank" href="https://www.facebook.com/crvycmplms/" rel="noreferrer">

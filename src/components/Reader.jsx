@@ -19,6 +19,7 @@ const Reader = () => {
 
   const [page, setPage] = useState(0)
   const [pages, setPages] = useState([])
+  const [maxPage, setMaxPage] = useState(0)
 
   // const fs = require('fs');
   // const dir = './directory';
@@ -33,7 +34,7 @@ const Reader = () => {
       if(thisChapter.id == chapter){
         levels.map((thisLevel) => {
           if(thisLevel.id == level) {
-            console.log(thisLevel.pages)
+            setMaxPage(thisLevel.pages)
             for (let i = 1; i <= thisLevel.pages; i++) {
               setPages((prevState) => [...prevState, { page: i}])
             }
@@ -49,10 +50,15 @@ const Reader = () => {
     return (<img src={imgUrl} alt="page" className="object-contain w-full" />)
   }
 
-  const renderIMGwithNext = (chapter, level, page) => {
+  const renderIMGwithNext = (chapter, level, page, maxPage) => {
+    let currentPage = page
+    if (maxPage == page){
+      currentPage -= 1
+    }
+
     const imgUrl = new URL(`../../images/comics/Chapter ${chapter}/Level ${level}/Post/${page}.png`, import.meta.url).href
     return (<img src={imgUrl} alt="page" className="object-contain w-full" onClick={() => {
-      setPage(page + 1)
+      setPage(currentPage + 1)
       window.scrollTo(0, 0)}}/>)
   }
 
@@ -121,16 +127,13 @@ const Reader = () => {
             </FormControl>
           </div>
         </div>
+
         <div className="flex flex-col justify-center items-center">
           {pages.map((viewPage) => (
-            (page == 0) ? (
-              renderIMG(chapter, level, viewPage.page)
-            ) 
-            : (page == viewPage.page) && (
-              renderIMGwithNext(chapter, level, viewPage.page)
-            )
+            (page == 0) ? (renderIMG(chapter, level, viewPage.page)) : (page == viewPage.page) && (renderIMGwithNext(chapter, level, viewPage.page, maxPage))
           ))}
         </div>
+
         {chapter.length != 0 && level.length != 0 && <div className="flex md:flex-row flex-col m-3 w-full justify-between mt-10">
           <div className="flex md:flex-row flex-col m-3 w-[50%]">
             <FormControl fullWidth>
@@ -192,8 +195,6 @@ const Reader = () => {
           </div>
         </div>}
       </div>
-      
-    
     </PerfectScrollbar>
   );
 };

@@ -4,7 +4,7 @@
   "homepage": "",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --no-clean",
+    "build": "vite build",
     "serve": "vite preview"
   },
   "dependencies": {

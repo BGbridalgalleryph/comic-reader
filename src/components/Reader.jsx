@@ -77,7 +77,7 @@ const Reader = () => {
   return (
     <PerfectScrollbar className="flex md:flex-row w-full bg-[#0d1429] flex-col justify-center">
       <div className="fixed bottom-10 right-10">
-        <BsFillArrowUpCircleFill className="text-gray-700 opacity-80 text-[100px] cursor-pointer" onClick={() => window.scrollTo(0,0)}/>
+        <BsFillArrowUpCircleFill className="text-gray-700 opacity-80 text-[100px] cursor-pointer transition hover:opacity-100 hover:duration-700" onClick={() => window.scrollTo(0,0)}/>
       </div>
       <div className="flex flex-col md:w-[70%] w-[90%] justify-start">
         <div className="flex md:flex-row flex-col m-3 w-full justify-between">

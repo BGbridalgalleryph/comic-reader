@@ -20,6 +20,8 @@ This currently shows the following episodes:
 
 ## Deployment:
 
-Todo
+execute script: 
+    
+    npm run build
 
 

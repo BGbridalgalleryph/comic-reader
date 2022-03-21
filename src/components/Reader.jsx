@@ -1,34 +1,29 @@
-import React, { useState, useEffect, } from "react"
-import 'react-perfect-scrollbar/dist/css/styles.css';
-import PerfectScrollbar from 'react-perfect-scrollbar'
+import React, { useState, useEffect, useContext} from "react"
 import {FormControl, InputLabel, Select, MenuItem} from '@mui/material'
 import { BsFillArrowUpCircleFill } from "react-icons/bs"
+import { MangaReaderContext } from "../context/MangaReaderContext";
 
 const Reader = () => {
-  const [chapters, setChapters] = useState([
-    {id: 1, name: 'Chapter 1'},
-  ])
+  
+  const {pages, setPages , data} = useContext(MangaReaderContext)
   const [chapter, setChapter] = useState('')
-
   const [level, setLevel] = useState('')
-  const [levels, setLevels] = useState([
-    {id: 7, name: 'Level 7', pages: 4},
-    {id: 13, name: 'Level 13', pages: 7},
-    {id: 20, name: 'Level 20', pages: 8},
-  ])
-
+  const [levels, setLevels] = useState([])
   const [page, setPage] = useState(0)
-  const [pages, setPages] = useState([])
   const [maxPage, setMaxPage] = useState(0)
 
-  const setPageArray = (chapters, chapter, levels, level) => {
+  const setPageArray = (data, chapter, level) => {
     setPages([])
-    chapters.map((thisChapter) => {
-      if(thisChapter.id == chapter){
-        levels.map((thisLevel) => {
-          if(thisLevel.id == level) {
-            setMaxPage(thisLevel.pages)
-            for (let i = 1; i <= thisLevel.pages; i++) {
+    data.map((dataChapter) => {
+      console.log(dataChapter.c)
+      if(dataChapter.c == chapter){
+        let objEntries = Object.entries(dataChapter.l);
+        setLevels(objEntries)
+        objEntries.map((dataLevel) => {
+          console.log(dataLevel)
+          if(dataLevel[0] == level){
+            setMaxPage(dataLevel[1])
+            for (let i = 1; i <= dataLevel[1]; i++) {
               setPages((prevState) => [...prevState, { page: i}])
             }
           }
@@ -71,11 +66,10 @@ const Reader = () => {
   }
 
   useEffect(() => {
-    
   }, [])
 
   return (
-    <PerfectScrollbar className="flex md:flex-row w-full bg-[#0d1429] flex-col justify-center">
+    <div className="flex md:flex-row w-full bg-[#0d1429] flex-col justify-center">
       <div className="fixed bottom-10 right-10">
         <BsFillArrowUpCircleFill className="text-gray-700 opacity-80 text-[100px] cursor-pointer transition hover:opacity-100 hover:duration-700" onClick={() => window.scrollTo(0,0)}/>
       </div>
@@ -91,11 +85,11 @@ const Reader = () => {
                 label="Chapter"
                 onChange={(e) => {
                   setChapter(e.target.value)
-                  setPageArray(chapters, e.target.value, levels, level)
+                  setPageArray(data, e.target.value, level)
                 }}
                 style={{color:"#fff",background:"#31313b"}}
               >
-              {chapters.map((singleChapter) =>  <MenuItem key={singleChapter.id} value={singleChapter.id}>{singleChapter.name}</MenuItem>)}
+              {data.map((singleChapter) =>  <MenuItem key={singleChapter.c} value={singleChapter.c}>Chapter {singleChapter.c}</MenuItem>)}
               </Select>
             </FormControl>
             <div className="flex md:w-[20%] w-full md:mx-2">
@@ -108,11 +102,11 @@ const Reader = () => {
                   label="Level"
                   onChange={(e) => {
                     setLevel(e.target.value)
-                    setPageArray(chapters, chapter, levels, e.target.value)
+                    setPageArray(data, chapter, e.target.value)
                   }}
                   style={{color:"#fff",background:"#31313b"}}
                 >
-                  {levels.map((singleLevel) =>  <MenuItem key={singleLevel.id} value={singleLevel.id}>{singleLevel.name}</MenuItem>)}
+                  {levels.map((singleLevel) =>  <MenuItem key={singleLevel[0]} value={singleLevel[0]}>Level {singleLevel[0]}</MenuItem>)}
                 </Select>
               </FormControl>
             </div>
@@ -154,12 +148,12 @@ const Reader = () => {
                 label="Chapter"
                 onChange={(e) => {
                   setChapter(e.target.value)
-                  setPageArray(chapters, e.target.value, levels, level)
+                  setPageArray(data, e.target.value, level)
                   window.scrollTo(0, 0)
                 }}
                 style={{color:"#fff",background:"#31313b"}}
               >
-              {chapters.map((singleChapter) =>  <MenuItem key={singleChapter.id} value={singleChapter.id}>{singleChapter.name}</MenuItem>)}
+              {data.map((singleChapter) =>  <MenuItem key={singleChapter.c} value={singleChapter.c}>Chapter {singleChapter.c}</MenuItem>)}
               </Select>
             </FormControl>
             <div className="flex md:w-[20%] w-full md:mx-2">
@@ -172,12 +166,12 @@ const Reader = () => {
                   label="Level"
                   onChange={(e) => {
                     setLevel(e.target.value)
-                    setPageArray(chapters, chapter, levels, e.target.value)
+                    setPageArray(data, chapter, e.target.value)
                     window.scrollTo(0, 0)
                   }}
                   style={{color:"#fff",background:"#31313b"}}
                 >
-                  {levels.map((singleLevel) =>  <MenuItem key={singleLevel.id} value={singleLevel.id}>{singleLevel.name}</MenuItem>)}
+                  {levels.map((singleLevel) =>  <MenuItem key={singleLevel[0]} value={singleLevel[0]}>Level {singleLevel[0]}</MenuItem>)}
                 </Select>
               </FormControl>
             </div>
@@ -204,7 +198,7 @@ const Reader = () => {
           </div>
         </div>}
       </div>
-    </PerfectScrollbar>
+    </div>
   );
 };
 

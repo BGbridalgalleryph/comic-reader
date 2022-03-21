@@ -1,17 +1,12 @@
-import React, { useContext, useState } from "react";
-import {Link} from "react-router-dom"
-
+import React from "react";
+import { Link } from "react-router-dom"
 import { HiMenuAlt4, HiOutlineTicket } from "react-icons/hi";
 import { AiOutlineClose, AiOutlineShop } from "react-icons/ai";
-import { VscAccount } from "react-icons/vsc"
 import { MdDashboard } from "react-icons/md"
-import { HiOutlineLogout } from "react-icons/hi"
 import { FaHome } from "react-icons/fa";
-
 import logo from "../../images/logo.png";
 
 const Navbar = () => {
-  const [buttonText, setButtonText] = useState('LOGIN')
   const [toggleMenu, setToggleMenu] = React.useState(false);
 
   return (
@@ -27,7 +22,7 @@ const Navbar = () => {
       <ul className="text-white md:flex hidden w-full justify-between">
         <div className="flex justify-start ml-2">
             <Link to={'/'}>
-              <li className="flex justify-center items-center px-4 cursor-pointer transition hover:duration-700 hover:bg-gray-600 rounded-sm text-lg py-3">
+              <li className="flex justify-center items-center px-4 cursor-pointer transition hover:duration-700 hover:bg-gray-600 rounded-sm text-lg py-3" >
                 <FaHome className="mr-2"/> Home
               </li>
             </Link>

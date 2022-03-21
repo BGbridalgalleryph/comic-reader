@@ -6,19 +6,19 @@ import App from "./App"
 
 import "./index.css"
 
+import { MangaReaderProvider } from "@context/MangaReaderContext"
+
 ReactDOM.render(
-  // <TransactionsProvider>
-  //   <MarketFilterProvider>
-      <BrowserRouter>
-      <div className="bg-[#0d1429]">
-        <Switch>
-          <Route path="/" exact component={App} />
-          <Redirect from="*" to="/" />  
-        </Switch>
-      </div>
-      </BrowserRouter>
-  //   </MarketFilterProvider>
-  // </TransactionsProvider>
+  <MangaReaderProvider>
+    <BrowserRouter>
+    <div className="bg-[#0d1429]">
+      <Switch>
+        <Route path="/" exact component={App} />
+        <Redirect from="*" to="/" />  
+      </Switch>
+    </div>
+    </BrowserRouter>
+  </MangaReaderProvider>
   ,
   document.getElementById("root"),
 );

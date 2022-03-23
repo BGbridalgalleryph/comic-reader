@@ -27,4 +27,5 @@ execute script:
 
 ## change log:
 
-added github self hosted actions using github-actions.yml
+* added github self hosted actions using [`github-actions.yml`](https://github.com/BGbridalgalleryph/comic-reader/blob/main/.github/workflows/github-actions.yml)
+

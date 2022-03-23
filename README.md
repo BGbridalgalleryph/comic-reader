@@ -25,3 +25,6 @@ execute script:
     npm run build
 
 
+## change log:
+
+added github self hosted actions using github-actions.yml

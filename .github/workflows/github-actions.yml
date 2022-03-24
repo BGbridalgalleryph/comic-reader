@@ -6,21 +6,21 @@ jobs:
     steps:
       - name: executing remote ssh commands using password
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      # - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      # - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      # - name: Check out repository code
-      #   uses: actions/checkout@v2
-      # - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      # - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      # - name: List files in the repository
-      # - run: |
-      #     ls ${{ github.workspace }}
-      # - run: echo "🍏 This job's status is ${{ job.status }}."
-        - shell: /bin/bash -e {0}
-          env:
-            HOST : ${{ secrets.HOST }}
-            DEPLOYER_PEM_KEY : ${{ secrets.DEPLOYER_PEM_KEY }}
-            PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
-          # example-command "$SUPER_SECRET"
-          run: |
-            ssh -i "$DEPLOYER_PEM_KEY" "$HOST"
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+      - run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+      #  - shell: /bin/bash -e {0}
+      #    env:
+      #      HOST : ${{ secrets.HOST }}
+      #      DEPLOYER_PEM_KEY : ${{ secrets.DEPLOYER_PEM_KEY }}
+      #      PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
+      #    # example-command "$SUPER_SECRET"
+      #    run: |
+      #      ssh -i "$DEPLOYER_PEM_KEY" "$HOST"

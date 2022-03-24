@@ -15,7 +15,7 @@ jobs:
       # - name: List files in the repository
       # - run: |
       #     ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      # - run: echo "🍏 This job's status is ${{ job.status }}."
         - shell: /bin/bash -e {0}
           env:
             HOST : ${{ secrets.HOST }}

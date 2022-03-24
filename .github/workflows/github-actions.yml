@@ -16,11 +16,3 @@ jobs:
       - run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      #  - shell: /bin/bash -e {0}
-      #    env:
-      #      HOST : ${{ secrets.HOST }}
-      #      DEPLOYER_PEM_KEY : ${{ secrets.DEPLOYER_PEM_KEY }}
-      #      PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
-      #    # example-command "$SUPER_SECRET"
-      #    run: |
-      #      ssh -i "$DEPLOYER_PEM_KEY" "$HOST"

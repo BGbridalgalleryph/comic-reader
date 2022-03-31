@@ -10,18 +10,6 @@ export const MangaReaderProvider = ({ children }) => {
     const envKey = import.meta.env.VITE_AES_CBC_KEY
     const envIV = import.meta.env.VITE_AES_CBC_IV
 
-    // const [chapters, setChapters] = useState([
-    //     {id: 1, name: 'Chapter 1'},
-    // ])
-
-    // const [levels, setLevels] = useState([
-    //     {id: 7, name: 'Level 7', pages: 4},
-    //     {id: 13, name: 'Level 13', pages: 7},
-    //     {id: 20, name: 'Level 20', pages: 8},
-    // ])
-
-    //const dataSample = [{"c": 1,"l": {"7": 4,"13": 7,"20": 8}}]
-
     const [pages, setPages] = useState([])
 
     const [data, setData] = useState([])
@@ -43,7 +31,7 @@ export const MangaReaderProvider = ({ children }) => {
             var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
             console.log(decryptedText)
             console.log(JSON.parse(decryptedText))
-            setData([JSON.parse(decryptedText)])
+            setData(JSON.parse(decryptedText))
         } catch (error) {
             console.error(error)
             alert("Something wrong with link to access page. You will not be able to access the manga chapters/levels.")

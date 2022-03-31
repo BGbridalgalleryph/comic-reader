@@ -29,8 +29,19 @@ export const MangaReaderProvider = ({ children }) => {
       var decryptedBytes = aesCbc.decrypt(encryptedBytes);
       var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
       console.log(decryptedText);
+      decryptedText = decryptedText
+        .replace(/\\n/g, "\\n")
+        .replace(/\\'/g, "\\'")
+        .replace(/\\"/g, '\\"')
+        .replace(/\\&/g, "\\&")
+        .replace(/\\r/g, "\\r")
+        .replace(/\\t/g, "\\t")
+        .replace(/\\b/g, "\\b")
+        .replace(/\\f/g, "\\f");
+      decryptedText = decryptedText.replace(/[\u0000-\u0019]+/g, "");
       console.log(JSON.parse(decryptedText));
-      setData([JSON.parse(decryptedText)]);
+      var decryptedTextJSON = JSON.parse(decryptedText);
+      setData([decryptedTextJSON]);
     } catch (error) {
       console.error(error);
       alert(

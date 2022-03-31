@@ -4,10 +4,11 @@ import aesjs from "aes-js";
 export const MangaReaderContext = React.createContext();
 
 export const MangaReaderProvider = ({ children }) => {
-  const envKey = import.meta.env.VITE_AES_CBC_KEY;
-  const envIV = import.meta.env.VITE_AES_CBC_IV;
+  //   const envKey = import.meta.env.VITE_AES_CBC_KEY;
+  //   const envIV = import.meta.env.VITE_AES_CBC_IV;
 
-  //const dataSample = [{"c": 1,"l": {"7": 4,"13": 7,"20": 8}}]
+  const envIV = "jrQf#Fn7f6sxt2f^";
+  const envKey = "#7gnZAVa&D43E@N%";
 
   const [pages, setPages] = useState([]);
 

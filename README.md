@@ -25,3 +25,7 @@ execute script:
     npm run build
 
 
+## change log:
+
+* added github self hosted actions using [`github-actions.yml`](https://github.com/BGbridalgalleryph/comic-reader/blob/main/.github/workflows/github-actions.yml)
+

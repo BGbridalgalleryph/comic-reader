@@ -12,7 +12,7 @@ const Reader = () => {
   const [page, setPage] = useState(0);
   const [maxPage, setMaxPage] = useState(0);
 
-  // [{"c":1,"l":{"7":4,"13":7,"20":8 }}]
+  // [{"c":1,"l":{"7":4,"13":7,"20":8}}]
 
   const setPageArray = (data, chapter, level) => {
     setPages([]);

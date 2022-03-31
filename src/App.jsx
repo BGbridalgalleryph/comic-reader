@@ -1,5 +1,4 @@
-import { Navbar, Reader, Footer, Welcome} from "./components";
-import PerfectScrollbar from 'react-perfect-scrollbar'
+import { Navbar, Reader, Footer, Welcome } from "./components";
 
 const App = () => (
   <div className="min-h-screen">
@@ -13,4 +12,3 @@ const App = () => (
 );
 
 export default App;
-

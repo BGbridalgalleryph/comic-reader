@@ -5,59 +5,77 @@ import { MangaReaderContext } from "../context/MangaReaderContext";
 import { useSwipeable } from "react-swipeable";
 
 const Reader = () => {
+  const baseURL = import.meta.env.VITE_IMG_BASE;
+  const imgBucketURL = import.meta.env.VITE_IMG_BUCKET;
   const { pages, setPages, data } = useContext(MangaReaderContext);
-  const [chapter, setChapter] = useState("");
-  const [level, setLevel] = useState("");
-  const [levels, setLevels] = useState([]);
+  const [chapter, setChapter] = useState("none");
   const [page, setPage] = useState(0);
   const [maxPage, setMaxPage] = useState(0);
 
   // [\{"c\":1,\"l\":{\"7\":4,\"13\":7,\"20\":10}}]
 
-  const setPageArray = (data, chapter, level) => {
+  const setPageArray = (data, chaptr) => {
     setPages([]);
+    console.log(data);
     data.map((dataChapter) => {
-      console.log(dataChapter.c);
-      if (dataChapter.c == chapter) {
-        let objEntries = Object.entries(dataChapter.l);
-        setLevels(objEntries);
-        objEntries.map((dataLevel) => {
-          console.log(dataLevel);
-          if (dataLevel[0] == level) {
-            setMaxPage(dataLevel[1]);
-            for (let i = 1; i <= dataLevel[1]; i++) {
-              setPages((prevState) => [...prevState, { page: i }]);
-            }
-          }
-        });
+      console.log(dataChapter.chapter);
+      if (dataChapter.chapter == chaptr) {
+        setMaxPage(dataChapter.pages);
+        for (let i = 1; i <= dataChapter.pages; i++) {
+          setPages((prevState) => [...prevState, { page: i }]);
+        }
       }
     });
     setPage(0);
   };
 
-  const renderIMG = (chapter, level, page) => {
-    const imgUrl = new URL(
-      `../../images/comics/Chapter ${chapter}/Level ${level}/Post/${page}.png`,
-      import.meta.url
-    ).href;
-    return <img src={imgUrl} alt="page" className="object-contain w-full" />;
+  const renderIMG = (chapter, page) => {
+    var imgUrl = "";
+    if (baseURL == "internal") {
+      imgUrl = new URL(
+        `../../images/comics/Chapter ${chapter}/${page}.png`,
+        import.meta.url
+      ).href;
+    } else if (baseURL == "external") {
+      imgUrl = new URL(
+        `${imgBucketURL}/Chapter ${chapter}/${page}.png`,
+        import.meta.url
+      ).href;
+    }
+
+    return (
+      <img
+        src={imgUrl}
+        alt="page"
+        className="object-contain md:w-full w-[90%]"
+      />
+    );
   };
 
-  const renderIMGwithNext = (chapter, level, page, maxPage) => {
+  const renderIMGwithNext = (chapter, page, maxPage) => {
     let currentPage = page;
     if (maxPage == page) {
       currentPage -= 1;
     }
 
-    const imgUrl = new URL(
-      `../../images/comics/Chapter ${chapter}/Level ${level}/Post/${page}.png`,
-      import.meta.url
-    ).href;
+    var imgUrl = "";
+    if (baseURL == "internal") {
+      imgUrl = new URL(
+        `../../images/comics/Chapter ${chapter}/${page}.png`,
+        import.meta.url
+      ).href;
+    } else if (baseURL == "external") {
+      imgUrl = new URL(
+        `${imgBucketURL}/Chapter ${chapter}/${page}.png`,
+        import.meta.url
+      ).href;
+    }
+
     return (
       <img
         src={imgUrl}
         alt="page"
-        className="object-contain w-full"
+        className="object-contain md:w-full w-[90%]"
         onClick={() => {
           setPage(currentPage + 1);
           window.scrollTo(0, 0);
@@ -106,7 +124,7 @@ const Reader = () => {
       </div>
       <div className="flex flex-col md:w-[70%] w-full justify-start">
         <div className="flex md:flex-row flex-col m-3 w-full justify-between">
-          <div className="flex md:flex-row flex-col m-3 md:w-[50%] w-[90%]">
+          <div className="flex md:flex-row flex-col m-3 md:w-[40%] w-[90%]">
             <FormControl fullWidth>
               <InputLabel
                 id="demo-simple-select-label"
@@ -121,18 +139,30 @@ const Reader = () => {
                 label="Chapter"
                 onChange={(e) => {
                   setChapter(e.target.value);
-                  setPageArray(data, e.target.value, level);
+                  setPageArray(data, e.target.value);
                 }}
                 style={{ color: "#fff", background: "#31313b" }}
               >
-                {data.map((singleChapter) => (
-                  <MenuItem key={singleChapter.c} value={singleChapter.c}>
-                    Chapter {singleChapter.c}
-                  </MenuItem>
-                ))}
+                {data.map((singleChapter) =>
+                  singleChapter.chapter != 0 ? (
+                    <MenuItem
+                      key={singleChapter.chapter}
+                      value={singleChapter.chapter}
+                    >
+                      Chapter {singleChapter.chapter}
+                    </MenuItem>
+                  ) : (
+                    <MenuItem
+                      key={singleChapter.chapter}
+                      value={singleChapter.chapter}
+                    >
+                      Prologue
+                    </MenuItem>
+                  )
+                )}
               </Select>
             </FormControl>
-            <div className="flex md:w-[20%] w-full md:mx-2">
+            {/* <div className="flex md:w-[20%] w-full md:mx-2">
               <FormControl fullWidth>
                 <InputLabel
                   id="demo-simple-select-label"
@@ -158,10 +188,10 @@ const Reader = () => {
                   ))}
                 </Select>
               </FormControl>
-            </div>
+            </div> */}
           </div>
 
-          <div className="flex md:flex-row flex-col m-3 md:w-[10%] w-[90%]">
+          <div className="flex md:flex-row flex-col m-3 md:w-[15%] w-[90%]">
             <FormControl fullWidth>
               <InputLabel
                 id="demo-simple-select-label"
@@ -194,16 +224,16 @@ const Reader = () => {
         >
           {pages.map((viewPage) =>
             page == 0
-              ? renderIMG(chapter, level, viewPage.page)
+              ? renderIMG(chapter, viewPage.page)
               : page == viewPage.page &&
-                renderIMGwithNext(chapter, level, viewPage.page, maxPage)
+                renderIMGwithNext(chapter, viewPage.page, maxPage)
           )}
           {(document.onkeydown = changePage)}
         </div>
 
-        {chapter.length != 0 && level.length != 0 && (
+        {chapter != "none" && (
           <div className="flex md:flex-row flex-col m-3 w-full justify-between mt-10">
-            <div className="flex md:flex-row flex-col m-3 md:w-[50%] w-[90%]">
+            <div className="flex md:flex-row flex-col m-3 md:w-[40%] w-[90%]">
               <FormControl fullWidth>
                 <InputLabel
                   id="demo-simple-select-label"
@@ -218,19 +248,31 @@ const Reader = () => {
                   label="Chapter"
                   onChange={(e) => {
                     setChapter(e.target.value);
-                    setPageArray(data, e.target.value, level);
+                    setPageArray(data, e.target.value);
                     window.scrollTo(0, 0);
                   }}
                   style={{ color: "#fff", background: "#31313b" }}
                 >
-                  {data.map((singleChapter) => (
-                    <MenuItem key={singleChapter.c} value={singleChapter.c}>
-                      Chapter {singleChapter.c}
-                    </MenuItem>
-                  ))}
+                  {data.map((singleChapter) =>
+                    singleChapter.chapter != 0 ? (
+                      <MenuItem
+                        key={singleChapter.chapter}
+                        value={singleChapter.chapter}
+                      >
+                        Chapter {singleChapter.chapter}
+                      </MenuItem>
+                    ) : (
+                      <MenuItem
+                        key={singleChapter.chapter}
+                        value={singleChapter.chapter}
+                      >
+                        Prologue
+                      </MenuItem>
+                    )
+                  )}
                 </Select>
               </FormControl>
-              <div className="flex md:w-[20%] w-full md:mx-2">
+              {/* <div className="flex md:w-[20%] w-full md:mx-2">
                 <FormControl fullWidth>
                   <InputLabel
                     id="demo-simple-select-label"
@@ -257,10 +299,10 @@ const Reader = () => {
                     ))}
                   </Select>
                 </FormControl>
-              </div>
+              </div> */}
             </div>
 
-            <div className="flex md:flex-row flex-col m-3 md:w-[10%] w-[90%]">
+            <div className="flex md:flex-row flex-col m-3 md:w-[15%] w-[90%]">
               <FormControl fullWidth>
                 <InputLabel
                   id="demo-simple-select-label"

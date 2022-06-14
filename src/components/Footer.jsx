@@ -58,7 +58,7 @@ const Footer = () => {
         <input
           placeholder="user@email.com"
           type="email"
-          className="rounded-lg p-2 outline-none text-pink-700 border-2 text-sm white-glassmorphism w-[300px] my-2 focus:border-pink-700 tr transition focus:duration-700"
+          className="rounded-lg p-2 outline-none text-pink-700 border-2 text-sm white-glassmorphism md:w-[300px] w-[100%] my-2 focus:border-pink-700 tr transition focus:duration-700"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);

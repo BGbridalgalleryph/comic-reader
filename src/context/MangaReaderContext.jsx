@@ -4,11 +4,11 @@ import aesjs from "aes-js";
 export const MangaReaderContext = React.createContext();
 
 export const MangaReaderProvider = ({ children }) => {
-  //   const envKey = import.meta.env.VITE_AES_CBC_KEY;
-  //   const envIV = import.meta.env.VITE_AES_CBC_IV;
+  const envKey = import.meta.env.VITE_AES_CBC_KEY;
+  const envIV = import.meta.env.VITE_AES_CBC_IV;
 
-  const envIV = "jrQf#Fn7f6sxt2f^";
-  const envKey = "#7gnZAVa&D43E@N%";
+  // const envIV = "jrQf#Fn7f6sxt2f^";
+  // const envKey = "#7gnZAVa&D43E@N%";
 
   const [pages, setPages] = useState([]);
 
@@ -42,7 +42,7 @@ export const MangaReaderProvider = ({ children }) => {
       decryptedText = decryptedText.replace(/[\u0000-\u0019]+/g, "");
       console.log(JSON.parse(decryptedText));
       var decryptedTextJSON = JSON.parse(decryptedText);
-      setData([decryptedTextJSON]);
+      setData(decryptedTextJSON);
     } catch (error) {
       console.error(error);
       alert(

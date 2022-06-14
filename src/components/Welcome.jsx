@@ -10,7 +10,7 @@ const Welcome = () => {
           {/* <img src={logoIMG} alt="logo" className="object-contain w-[500px]" /> */}
           <p className="flex text-[50px] text-white md:text-[60px] font-face-prototype justify-center w-full items-center md:text-start text-center">
             {" "}
-            MANGA READER
+            COMIC READER
           </p>
         </div>
       </div>

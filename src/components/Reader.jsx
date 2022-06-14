@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
-import { MangaReaderContext } from "../context/MangaReaderContext";
+import { MangaReaderContext } from "@context/MangaReaderContext";
 import { useSwipeable } from "react-swipeable";
 
 const Reader = () => {
   const baseURL = import.meta.env.VITE_IMG_BASE;
   const imgBucketURL = import.meta.env.VITE_IMG_BUCKET;
+  // const baseURL = "internal";
+  // const imgBucketURL = "";
+
   const { pages, setPages, data } = useContext(MangaReaderContext);
   const [chapter, setChapter] = useState("none");
   const [page, setPage] = useState(0);
@@ -30,18 +33,23 @@ const Reader = () => {
   };
 
   const renderIMG = (chapter, page) => {
-    var imgUrl = "";
-    if (baseURL == "internal") {
-      imgUrl = new URL(
-        `../../images/comics/Chapter ${chapter}/${page}.png`,
-        import.meta.url
-      ).href;
-    } else if (baseURL == "external") {
-      imgUrl = new URL(
-        `${imgBucketURL}/Chapter ${chapter}/${page}.png`,
-        import.meta.url
-      ).href;
-    }
+    // var imgUrl = new URL();
+    // if (baseURL == "internal") {
+    //   imgUrl = new URL(
+    //     `../../images/comics/Chapter ${chapter}/${page}.png`,
+    //     import.meta.url
+    //   ).href;
+    // } else if (baseURL == "external") {
+    //   imgUrl = new URL(
+    //     `${imgBucketURL}/Chapter ${chapter}/${page}.png`,
+    //     import.meta.url
+    //   ).href;
+    // }
+
+    const imgUrl = new URL(
+      `../../images/comics/Chapter ${chapter}/${page}.png`,
+      import.meta.url
+    ).href;
 
     return (
       <img
@@ -58,18 +66,23 @@ const Reader = () => {
       currentPage -= 1;
     }
 
-    var imgUrl = "";
-    if (baseURL == "internal") {
-      imgUrl = new URL(
-        `../../images/comics/Chapter ${chapter}/${page}.png`,
-        import.meta.url
-      ).href;
-    } else if (baseURL == "external") {
-      imgUrl = new URL(
-        `${imgBucketURL}/Chapter ${chapter}/${page}.png`,
-        import.meta.url
-      ).href;
-    }
+    // var imgUrl = new URL();
+    // if (baseURL == "internal") {
+    //   imgUrl = new URL(
+    //     `../../images/comics/Chapter ${chapter}/${page}.png`,
+    //     import.meta.url
+    //   ).href;
+    // } else if (baseURL == "external") {
+    //   imgUrl = new URL(
+    //     `${imgBucketURL}/Chapter ${chapter}/${page}.png`,
+    //     import.meta.url
+    //   ).href;
+    // }
+
+    const imgUrl = new URL(
+      `../../images/comics/Chapter ${chapter}/${page}.png`,
+      import.meta.url
+    ).href;
 
     return (
       <img
@@ -123,8 +136,8 @@ const Reader = () => {
         />
       </div>
       <div className="flex flex-col md:w-[70%] w-full justify-start">
-        <div className="flex md:flex-row flex-col m-3 w-full justify-between">
-          <div className="flex md:flex-row flex-col m-3 md:w-[40%] w-[90%]">
+        <div className="flex md:flex-row flex-col w-full my-3 md:justify-between justify-center items-center">
+          <div className="flex md:flex-row flex-col md:w-[40%] my-3 w-[90%]">
             <FormControl fullWidth>
               <InputLabel
                 id="demo-simple-select-label"
@@ -191,7 +204,7 @@ const Reader = () => {
             </div> */}
           </div>
 
-          <div className="flex md:flex-row flex-col m-3 md:w-[15%] w-[90%]">
+          <div className="flex md:flex-row flex-col   md:w-[15%] w-[90%]">
             <FormControl fullWidth>
               <InputLabel
                 id="demo-simple-select-label"
@@ -232,8 +245,8 @@ const Reader = () => {
         </div>
 
         {chapter != "none" && (
-          <div className="flex md:flex-row flex-col m-3 w-full justify-between mt-10">
-            <div className="flex md:flex-row flex-col m-3 md:w-[40%] w-[90%]">
+          <div className="flex md:flex-row flex-col w-full my-3 md:justify-between justify-center items-center mt-10">
+            <div className="flex md:flex-row flex-col my-3 md:w-[40%] w-[90%]">
               <FormControl fullWidth>
                 <InputLabel
                   id="demo-simple-select-label"
@@ -302,7 +315,7 @@ const Reader = () => {
               </div> */}
             </div>
 
-            <div className="flex md:flex-row flex-col m-3 md:w-[15%] w-[90%]">
+            <div className="flex md:flex-row flex-col md:w-[15%] w-[90%]">
               <FormControl fullWidth>
                 <InputLabel
                   id="demo-simple-select-label"

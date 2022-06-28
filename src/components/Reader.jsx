@@ -51,7 +51,7 @@ const Reader = () => {
     forceCheck();
 
     const imgUrl = new URL(
-      `../../images/comics/Chapter ${chapter}/${page}.png`,
+      `../../images/comics/compressed/Chapter ${chapter}/${page}.png`,
       import.meta.url
     ).href;
 
@@ -92,7 +92,7 @@ const Reader = () => {
     // }
 
     const imgUrl = new URL(
-      `../../images/comics/Chapter ${chapter}/${page}.png`,
+      `../../images/comics/compressed/Chapter ${chapter}/${page}.png`,
       import.meta.url
     ).href;
 

@@ -59,8 +59,8 @@ const Reader = () => {
         <img
           src={imgUrl}
           onError={(ev) => {
-            setPage(currentPage + 1);
             ev.target.style.visibility = "hidden";
+            setPage(currentPage + 1);
           }}
           alt="page"
           className="object-contain md:w-full w-[90%]"
@@ -98,8 +98,8 @@ const Reader = () => {
         <img
           src={imgUrl}
           onError={(ev) => {
-            setPage(currentPage + 1);
             ev.target.style.visibility = "hidden";
+            setPage(currentPage + 1);
           }}
           alt="page"
           className="object-contain md:w-full w-[90%]"

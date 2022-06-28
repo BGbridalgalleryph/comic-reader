@@ -18,19 +18,20 @@ const Reader = () => {
 
   // [\{"c\":1,\"l\":{\"7\":4,\"13\":7,\"20\":10}}]
 
-  const setPageArray = (data, chaptr) => {
+  const setPageArray = (data, chapter) => {
     setPages([]);
     console.log(data);
     data.map((dataChapter) => {
-      console.log(dataChapter.chapter);
-      if (dataChapter.chapter == chaptr) {
-        setMaxPage(dataChapter.pages);
-        for (let i = 0; i <= dataChapter.pages; i++) {
+      console.log(dataChapter.c);
+      if (dataChapter.c == chapter) {
+        setMaxPage(dataChapter.p);
+        for (let i = 0; i <= dataChapter.p; i++) {
           setPages((prevState) => [...prevState, { page: i }]);
         }
       }
     });
-    setPage(0);
+    console.log(pages);
+    setPage("all");
   };
 
   const renderIMG = (chapter, page) => {
@@ -60,7 +61,6 @@ const Reader = () => {
           src={imgUrl}
           onError={(ev) => {
             ev.target.style.visibility = "hidden";
-            setPage(currentPage + 1);
           }}
           alt="page"
           className="object-contain md:w-full w-[90%]"
@@ -173,17 +173,11 @@ const Reader = () => {
               >
                 {data.map((singleChapter) =>
                   singleChapter.chapter != 0 ? (
-                    <MenuItem
-                      key={singleChapter.chapter}
-                      value={singleChapter.chapter}
-                    >
-                      Chapter {singleChapter.chapter}
+                    <MenuItem key={singleChapter.c} value={singleChapter.c}>
+                      Chapter {singleChapter.c}
                     </MenuItem>
                   ) : (
-                    <MenuItem
-                      key={singleChapter.chapter}
-                      value={singleChapter.chapter}
-                    >
+                    <MenuItem key={singleChapter.c} value={singleChapter.c}>
                       Prologue
                     </MenuItem>
                   )
@@ -282,18 +276,12 @@ const Reader = () => {
                   style={{ color: "#fff", background: "#31313b" }}
                 >
                   {data.map((singleChapter) =>
-                    singleChapter.chapter != 0 ? (
-                      <MenuItem
-                        key={singleChapter.chapter}
-                        value={singleChapter.chapter}
-                      >
-                        Chapter {singleChapter.chapter}
+                    singleChapter.c != 0 ? (
+                      <MenuItem key={singleChapter.c} value={singleChapter.c}>
+                        Chapter {singleChapter.c}
                       </MenuItem>
                     ) : (
-                      <MenuItem
-                        key={singleChapter.chapter}
-                        value={singleChapter.chapter}
-                      >
+                      <MenuItem key={singleChapter.c} value={singleChapter.c}>
                         Prologue
                       </MenuItem>
                     )
@@ -349,7 +337,7 @@ const Reader = () => {
                   }}
                   style={{ color: "#fff", background: "#31313b" }}
                 >
-                  <MenuItem value={0}>All Pages</MenuItem>
+                  <MenuItem value={"all"}>All Pages</MenuItem>
                   {pages.map((singlePage) => (
                     <MenuItem key={singlePage.page} value={singlePage.page}>
                       Page {singlePage.page}

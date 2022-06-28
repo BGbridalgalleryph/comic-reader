@@ -3,6 +3,7 @@ import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
 import { MangaReaderContext } from "@context/MangaReaderContext";
 import { useSwipeable } from "react-swipeable";
+import LazyLoad, { forceCheck } from "react-lazyload";
 
 const Reader = () => {
   const baseURL = import.meta.env.VITE_IMG_BASE;
@@ -12,7 +13,7 @@ const Reader = () => {
 
   const { pages, setPages, data } = useContext(MangaReaderContext);
   const [chapter, setChapter] = useState("none");
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState("all");
   const [maxPage, setMaxPage] = useState(0);
 
   // [\{"c\":1,\"l\":{\"7\":4,\"13\":7,\"20\":10}}]
@@ -24,7 +25,7 @@ const Reader = () => {
       console.log(dataChapter.chapter);
       if (dataChapter.chapter == chaptr) {
         setMaxPage(dataChapter.pages);
-        for (let i = 1; i <= dataChapter.pages; i++) {
+        for (let i = 0; i <= dataChapter.pages; i++) {
           setPages((prevState) => [...prevState, { page: i }]);
         }
       }
@@ -46,17 +47,25 @@ const Reader = () => {
     //   ).href;
     // }
 
+    forceCheck();
+
     const imgUrl = new URL(
       `../../images/comics/Chapter ${chapter}/${page}.png`,
       import.meta.url
     ).href;
 
     return (
-      <img
-        src={imgUrl}
-        alt="page"
-        className="object-contain md:w-full w-[90%]"
-      />
+      <LazyLoad height={500} offset={100}>
+        <img
+          src={imgUrl}
+          onError={(ev) => {
+            setPage(currentPage + 1);
+            ev.target.style.visibility = "hidden";
+          }}
+          alt="page"
+          className="object-contain md:w-full w-[90%]"
+        />
+      </LazyLoad>
     );
   };
 
@@ -85,15 +94,21 @@ const Reader = () => {
     ).href;
 
     return (
-      <img
-        src={imgUrl}
-        alt="page"
-        className="object-contain md:w-full w-[90%]"
-        onClick={() => {
-          setPage(currentPage + 1);
-          window.scrollTo(0, 0);
-        }}
-      />
+      <LazyLoad height={500} offset={100}>
+        <img
+          src={imgUrl}
+          onError={(ev) => {
+            setPage(currentPage + 1);
+            ev.target.style.visibility = "hidden";
+          }}
+          alt="page"
+          className="object-contain md:w-full w-[90%]"
+          onClick={() => {
+            setPage(currentPage + 1);
+            window.scrollTo(0, 0);
+          }}
+        />
+      </LazyLoad>
     );
   };
 
@@ -220,7 +235,7 @@ const Reader = () => {
                 onChange={(e) => setPage(e.target.value)}
                 style={{ color: "#fff", background: "#31313b" }}
               >
-                <MenuItem value={0}>All Pages</MenuItem>
+                <MenuItem value={"all"}>All Pages</MenuItem>
                 {pages.map((singlePage) => (
                   <MenuItem key={singlePage.page} value={singlePage.page}>
                     Page {singlePage.page}
@@ -236,7 +251,7 @@ const Reader = () => {
           {...handlers}
         >
           {pages.map((viewPage) =>
-            page == 0
+            page == "all"
               ? renderIMG(chapter, viewPage.page)
               : page == viewPage.page &&
                 renderIMGwithNext(chapter, viewPage.page, maxPage)

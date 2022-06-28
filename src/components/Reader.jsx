@@ -56,14 +56,17 @@ const Reader = () => {
     ).href;
 
     return (
-      <LazyLoad height={500} offset={100}>
+      <LazyLoad
+        height={500}
+        offset={100}
+        className="object-contain md:w-full w-[90%]"
+      >
         <img
           src={imgUrl}
           onError={(ev) => {
             ev.target.style.visibility = "hidden";
           }}
           alt="page"
-          className="object-contain md:w-full w-[90%]"
         />
       </LazyLoad>
     );
@@ -94,7 +97,11 @@ const Reader = () => {
     ).href;
 
     return (
-      <LazyLoad height={500} offset={100}>
+      <LazyLoad
+        height={500}
+        offset={100}
+        className="object-contain md:w-full w-[90%]"
+      >
         <img
           src={imgUrl}
           onError={(ev) => {
@@ -102,7 +109,6 @@ const Reader = () => {
             setPage(currentPage + 1);
           }}
           alt="page"
-          className="object-contain md:w-full w-[90%]"
           onClick={() => {
             setPage(currentPage + 1);
             window.scrollTo(0, 0);

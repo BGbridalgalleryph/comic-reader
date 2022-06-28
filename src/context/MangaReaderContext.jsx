@@ -12,7 +12,7 @@ export const MangaReaderProvider = ({ children }) => {
 
   const [pages, setPages] = useState([]);
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([{ c: 1, p: 38 }]);
 
   const getLimitsFromURL = () => {
     let url = window.location.href.split("?");
@@ -52,7 +52,7 @@ export const MangaReaderProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    getLimitsFromURL();
+    // getLimitsFromURL();
   }, []);
 
   return (
